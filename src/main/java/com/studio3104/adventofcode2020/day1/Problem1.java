@@ -6,14 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Problem1 {
-    final int SUMTO = 2020;
-    int[] input;
-
-    public Problem1() {
-        input = InputLoader.loadIntegerInput(1);
-    }
-
-    int[] getNumsOfTwoSum(int[] nums, int i, int sumTo) {
+    static int[] getNumsOfTwoSum(int[] nums, int i, int sumTo) {
         Set<Integer> set = new HashSet<>();
 
         for (int j = i + 1; j < nums.length; ++j) {
@@ -30,13 +23,12 @@ public class Problem1 {
         return new int[]{0, 0};
     }
 
-    public int getResult(int[] nums) {
-        int[] twoSum = getNumsOfTwoSum(nums, -1, this.SUMTO);
+    private static int getResult(int[] nums) {
+        int[] twoSum = getNumsOfTwoSum(nums, -1, 2020);
         return twoSum[0] * twoSum[1];
     }
 
     public static void main(String[] args) {
-        Problem1 problem = new Problem1();
-        System.out.println(problem.getResult(problem.input));
+        System.out.println(Problem1.getResult(InputLoader.loadIntegerInput(1)));
     }
 }

@@ -1,13 +1,14 @@
 package com.studio3104.adventofcode2020.day1;
 
+import com.studio3104.adventofcode2020.utilities.InputLoader;
+
 import java.util.Arrays;
 
-public class Problem2 extends Problem1 {
-    private int[] getNumsOfThreeSum(int[] nums) {
+public class Problem2 {
+    private static int[] getNumsOfThreeSum(int[] nums) {
         for (int i = 0; i < nums.length; ++i) {
             int n = nums[i];
-            int sumTo = this.SUMTO - n;
-            int[] twoSum = getNumsOfTwoSum(nums, i, sumTo);
+            int[] twoSum = Problem1.getNumsOfTwoSum(nums, i, 2020 - n);
 
             if (twoSum[0] != 0 || twoSum[1] != 0) {
                 return new int[]{n, twoSum[0], twoSum[1]};
@@ -17,13 +18,12 @@ public class Problem2 extends Problem1 {
         return new int[]{0, 0, 0};
     }
 
-    public int getResult(int[] nums) {
+    private static int getResult(int[] nums) {
         int[] threeSum = getNumsOfThreeSum(nums);
         return Arrays.stream(threeSum).reduce(1, (n, m) -> n * m);
     }
 
     public static void main(String[] args) {
-        Problem2 problem = new Problem2();
-        System.out.println(problem.getResult(problem.input));
+        System.out.println(Problem2.getResult(InputLoader.loadIntegerInput(1)));
     }
 }
