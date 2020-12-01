@@ -6,7 +6,7 @@ public class Problem2 extends Problem1 {
     private int[] getNumsOfThreeSum(int[] nums) {
         for (int i = 0; i < nums.length; ++i) {
             int n = nums[i];
-            int sumTo = SUMTO - n;
+            int sumTo = this.SUMTO - n;
             int[] twoSum = getNumsOfTwoSum(nums, i, sumTo);
 
             if (twoSum[0] != 0 || twoSum[1] != 0) {
@@ -24,6 +24,6 @@ public class Problem2 extends Problem1 {
 
     public static void main(String[] args) {
         Problem2 problem = new Problem2();
-        System.out.println(problem.getResult(INPUT));
+        System.out.println(problem.getResult(problem.input));
     }
 }
