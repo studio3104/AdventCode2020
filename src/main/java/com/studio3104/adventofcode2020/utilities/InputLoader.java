@@ -16,12 +16,16 @@ public class InputLoader {
         }
     }
 
-    private static Stream<String> loadInput(int day) {
+    public static Stream<String> loadInput(int day) {
         Path path = Paths.get("input", "day" + String.format("%02d", day) + ".txt");
         return readInputFile(path);
     }
 
     public static int[] loadIntegerInput(int day) {
         return loadInput(day).mapToInt(Integer::parseInt).toArray();
+    }
+
+    public static String[] loadStringInput(int day) {
+        return (String[]) loadInput(day).toArray();
     }
 }
