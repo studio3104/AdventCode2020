@@ -1,4 +1,4 @@
-package com.studio3104.adventofcode2020.day1;
+package com.studio3104.adventofcode2020.day01;
 
 import com.studio3104.adventofcode2020.utilities.InputLoader;
 
