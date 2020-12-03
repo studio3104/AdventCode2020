@@ -6,13 +6,11 @@ public class Problem1 {
     public static int countTrees(String[] map, int toRight, int toDown) {
         int numTrees = 0;
         int p = 0;
-        int len = map[0].length();
 
         for (int i = toDown; i < map.length; i += toDown) {
             p += toRight;
-            if (p >= len) {
-                p -= len;
-            }
+            p %= map[0].length();
+
             if (map[i].charAt(p) == '#') {
                 ++numTrees;
             }
