@@ -3,13 +3,13 @@ package com.studio3104.adventofcode2020.day03;
 import com.studio3104.adventofcode2020.utilities.InputLoader;
 
 public class Problem1 {
-    private static int countTrees(String[] map) {
+    public static int countTrees(String[] map, int toRight, int toDown) {
         int numTrees = 0;
         int p = 0;
         int len = map[0].length();
 
-        for (int i = 1; i < map.length; ++i) {
-            p += 3;
+        for (int i = toDown; i < map.length; i += toDown) {
+            p += toRight;
             if (p >= len) {
                 p -= len;
             }
@@ -22,7 +22,7 @@ public class Problem1 {
     }
 
     private static int getResult(String[] map) {
-        return countTrees(map);
+        return countTrees(map, 3, 1);
     }
 
     public static void main(String[] args) {
