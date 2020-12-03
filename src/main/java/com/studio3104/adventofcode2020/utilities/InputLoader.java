@@ -26,6 +26,6 @@ public class InputLoader {
     }
 
     public static String[] loadStringInput(int day) {
-        return (String[]) loadInput(day).toArray();
+        return loadInput(day).toArray(String[]::new);
     }
 }
