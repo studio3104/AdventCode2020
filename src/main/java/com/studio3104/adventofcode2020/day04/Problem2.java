@@ -4,9 +4,9 @@ import com.studio3104.adventofcode2020.utilities.InputLoader;
 
 import java.util.List;
 
-public class Problem1 {
+public class Problem2 {
     private static long getResult(List<Passport> passports) {
-        return passports.stream().filter(p -> p.validate(false)).count();
+        return passports.stream().filter(p -> p.validate(true)).count();
     }
 
     public static void main(String[] args) {
