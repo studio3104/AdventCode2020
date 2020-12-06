@@ -2,27 +2,35 @@ package com.studio3104.adventofcode2020.day06;
 
 import com.studio3104.adventofcode2020.utilities.InputLoader;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Problem1 {
+    private static int countAllYes(Map<Character, Integer> s, int n) {
+        return (int) s.entrySet().stream().filter(e -> e.getValue() == n).count();
+    }
+
     private static int getResult(String[] answers) {
         int sum = 0;
-        Set<Character> s = new HashSet<>();
+        int numInGroup = 0;
+        Map<Character, Integer> s = new HashMap<>();
 
         for (String a : answers) {
             if (a.isBlank()) {
-                sum += s.size();
-                s = new HashSet<>();
+                sum += countAllYes(s, numInGroup);
+                numInGroup = 0;
+                s = new HashMap<>();
                 continue;
             }
 
+            ++numInGroup;
+
             for (char c : a.toCharArray()) {
-                s.add(c);
+                s.put(c, s.getOrDefault(c, 0) + 1);
             }
         }
 
-        return sum + s.size();
+        return sum + countAllYes(s, numInGroup);
     }
 
     public static void main(String[] args) {
