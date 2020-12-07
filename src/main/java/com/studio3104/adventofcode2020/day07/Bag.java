@@ -8,13 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@lombok.AllArgsConstructor
-@lombok.Getter
-class InnerBag {
-    private final Bag bag;
-    private final int amount;
-}
-
 @lombok.Getter
 public class Bag {
     private final String color;
