@@ -1,17 +1,30 @@
 package com.studio3104.adventofcode2020.day07;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+@lombok.AllArgsConstructor
+@lombok.Getter
+class InnerBag {
+    private final Bag bag;
+    private final int amount;
+}
 
 @lombok.Getter
 public class Bag {
     private final String color;
     private final Set<Bag> outers;
-    private final Map<Bag, Integer> contents;
+    private final List<InnerBag> inners;
 
     public Bag(String color) {
         this.color = color;
         outers = new HashSet<>();
-        contents = new HashMap<>();
+        inners = new ArrayList<>();
     }
 
     public static Map<String, Bag> getBags(String[] rules) {
@@ -35,8 +48,8 @@ public class Bag {
                 Bag sub = bagOf.getOrDefault(color, new Bag(color));
                 bagOf.putIfAbsent(color, sub);
 
-                sub.getOuters().add(bag);
-                bag.getContents().put(sub, amount);
+                sub.outers.add(bag);
+                bag.inners.add(new InnerBag(sub, amount));
             }
         }
 

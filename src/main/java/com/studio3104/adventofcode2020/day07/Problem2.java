@@ -4,31 +4,26 @@ import com.studio3104.adventofcode2020.utilities.InputLoader;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-public class Problem1 {
+public class Problem2 {
     private static int getResult(String[] rules) {
         Map<String, Bag> bagOf = Bag.getBags(rules);
+        Deque<InnerBag> q = new ArrayDeque<>();
 
-        Deque<Bag> q = new ArrayDeque<>();
-        q.addLast(bagOf.get("shiny gold"));
-
-        Set<Bag> includes = new HashSet<>();
+        q.addLast(new InnerBag(bagOf.get("shiny gold"), 1));
+        int numBags = 0;
 
         while (!q.isEmpty()) {
-            Bag bag = q.pollFirst();
+            InnerBag outer = q.pollFirst();
+            numBags += outer.getAmount();
 
-            if (includes.contains(bag)) {
-                continue;
+            for (InnerBag inner : outer.getBag().getInners()) {
+                q.addLast(new InnerBag(inner.getBag(), outer.getAmount() * inner.getAmount()));
             }
-
-            includes.add(bag);
-            q.addAll(bag.getOuters());
         }
 
-        return includes.size() - 1;
+        return numBags - 1;
     }
 
     public static void main(String[] args) {
