@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Problem1 {
-    private static int getResult(String[] rules) {
+    static int getResult(String[] rules) {
         Map<String, Bag> bagOf = Bag.getBags(rules);
 
         Deque<Bag> q = new ArrayDeque<>();

@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.Map;
 
 public class Problem2 {
-    private static int getResult(String[] rules) {
+    static int getResult(String[] rules) {
         Map<String, Bag> bagOf = Bag.getBags(rules);
         Deque<InnerBag> q = new ArrayDeque<>();
 
