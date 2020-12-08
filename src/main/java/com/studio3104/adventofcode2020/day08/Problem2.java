@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Problem2 {
-    static Integer execCommands(Command[] commands, int acc, int p, Set<Integer> done, boolean changed) {
+     private static Integer execCommands(Command[] commands, int acc, int p, Set<Integer> done, boolean changed) {
         while (!done.contains(p) && p >= 0 && p < commands.length) {
             done.add(p);
 
