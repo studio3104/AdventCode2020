@@ -25,14 +25,14 @@ public class Problem2 {
                         break;
                     }
                     i = execCommands(commands, acc, p + 1, new HashSet<>(done), true);
-                    return i != null ? i : execCommands(commands, acc, p + n, new HashSet<>(done), false);
+                    return i != null ? i : execCommands(commands, acc, p + n, done, false);
                 case "nop":
                     if (changed) {
                         ++p;
                         break;
                     }
                     i = execCommands(commands, acc, p + n, new HashSet<>(done), true);
-                    return i != null ? i : execCommands(commands, acc, p + 1, new HashSet<>(done), false);
+                    return i != null ? i : execCommands(commands, acc, p + 1, done, false);
                 default:
                     throw new RuntimeException();
             }
