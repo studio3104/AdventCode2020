@@ -6,29 +6,29 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Problem1 {
-    static int[] getNumsOfTwoSum(int[] nums, int i, int sumTo) {
-        Set<Integer> set = new HashSet<>();
+    public static long[] getNumsOfTwoSum(long[] nums, int head, int tail, long sumTo) {
+        Set<Long> set = new HashSet<>();
 
-        for (int j = i + 1; j < nums.length; ++j) {
-            int n = nums[j];
-            int toFind = sumTo - n;
+        for (int j = head; j < tail; ++j) {
+            long n = nums[j];
+            long toFind = sumTo - n;
 
             if (set.contains(toFind)) {
-                return new int[]{n, toFind};
+                return new long[]{n, toFind};
             }
 
             set.add(n);
         }
 
-        return new int[]{0, 0};
+        return new long[]{0, 0};
     }
 
-    private static int getResult(int[] nums) {
-        int[] twoSum = getNumsOfTwoSum(nums, -1, 2020);
+    private static long getResult(long[] nums) {
+        long[] twoSum = getNumsOfTwoSum(nums, 0, nums.length, 2020);
         return twoSum[0] * twoSum[1];
     }
 
     public static void main(String[] args) {
-        System.out.println(Problem1.getResult(InputLoader.loadIntegerInput(1)));
+        System.out.println(Problem1.getResult(InputLoader.loadLongInput(1)));
     }
 }

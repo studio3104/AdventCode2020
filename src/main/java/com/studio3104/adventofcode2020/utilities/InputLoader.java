@@ -25,6 +25,10 @@ public class InputLoader {
         return loadInput(day).mapToInt(Integer::parseInt).toArray();
     }
 
+    public static long[] loadLongInput(int day) {
+        return loadInput(day).mapToLong(Long::parseLong).toArray();
+    }
+
     public static String[] loadStringInput(int day) {
         return loadInput(day).toArray(String[]::new);
     }
