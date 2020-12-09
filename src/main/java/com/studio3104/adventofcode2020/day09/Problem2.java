@@ -21,11 +21,7 @@ public class Problem2 {
         int left = 0, right = 0;
 
         while (sum != exception) {
-            if (sum < exception) {
-                sum += nums[++right];
-            } else {
-                sum -= nums[left++];
-            }
+            sum += sum < exception ? nums[++right] : nums[left++] * -1;
         }
 
         return sumMinMax(nums, left, right);
