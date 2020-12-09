@@ -2,41 +2,33 @@ package com.studio3104.adventofcode2020.day09;
 
 import com.studio3104.adventofcode2020.utilities.InputLoader;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 public class Problem2 {
-    private static long sumMinMax(Deque<Long> q) {
+    private static long sumMinMax(long[] nums, int left, int right) {
         long smallest = Long.MAX_VALUE;
         long largest = Long.MIN_VALUE;
 
-        for (long n : q) {
-            smallest = Math.min(smallest, n);
-            largest = Math.max(largest, n);
+        for (int i = left; i <= right; ++i) {
+            smallest = Math.min(smallest, nums[i]);
+            largest = Math.max(largest, nums[i]);
         }
 
         return smallest + largest;
     }
 
     static long getResult(long[] nums, int len) {
-        Deque<Long> q = new ArrayDeque<>();
-        long sum = 0;
+        long sum = nums[0];
         long exception = Problem1.getResult(nums, len);
+        int left = 0, right = 0;
 
-        for (long n : nums) {
-            sum += n;
-            q.addLast(n);
-
-            while (!q.isEmpty() && sum > exception) {
-                sum -= q.pollFirst();
-            }
-
-            if (sum == exception) {
-                return sumMinMax(q);
+        while (sum != exception) {
+            if (sum < exception) {
+                sum += nums[++right];
+            } else {
+                sum -= nums[left++];
             }
         }
 
-        throw new RuntimeException();
+        return sumMinMax(nums, left, right);
     }
 
     public static void main(String[] args) {
