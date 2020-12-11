@@ -33,7 +33,7 @@ public class InputLoader {
         return loadInput(day).toArray(String[]::new);
     }
 
-    public static char[][] loadGrid(int day) {
+    public static char[][] loadCharGrid(int day) {
         return loadInput(day).map(String::toCharArray).toArray(char[][]::new);
     }
 }

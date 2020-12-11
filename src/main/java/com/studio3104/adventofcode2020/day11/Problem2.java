@@ -4,34 +4,38 @@ import com.studio3104.adventofcode2020.utilities.InputLoader;
 
 import java.util.Arrays;
 
-public class Problem1 {
-    private static int countAdjacentOccupied(char[][] grid, int i, int j) {
-        int count = 0;
+public class Problem2 {
+    private static boolean canSeeOccupied(char[][] grid, int i, int j, int[] d) {
+        i += d[0];
+        j += d[1];
 
-        for (int k = i - 1; k <= i + 1; ++k) {
-            if (k < 0 || k >= grid.length) continue;
-
-            for (int l = j - 1; l <= j + 1; ++l) {
-                if (k == i && l == j) continue;
-
-                if (l >= 0 && l < grid[k].length && grid[k][l] == '#') {
-                    ++count;
-                }
-            }
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[i].length) {
+            return false;
         }
 
-        return count;
+        char c = grid[i][j];
+
+        if (c == '.') {
+            return canSeeOccupied(grid, i, j, d);
+        }
+
+        return c == '#';
+    }
+
+    private static int countViewableOccupied(char[][] grid, int i, int j) {
+        int[][] directions = new int[][]{{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
+        return (int) Arrays.stream(directions).filter(d -> canSeeOccupied(grid, i, j, d)).count();
     }
 
     private static char getCharAppliedRule(char[][] grid, int i, int j) {
         char s = grid[i][j];
         if (s == '.') return s;
 
-        int numAdjacentOccupied = countAdjacentOccupied(grid, i, j);
+        int numSurroundingsOccupied = countViewableOccupied(grid, i, j);
 
-        if (s == 'L' && numAdjacentOccupied == 0) {
+        if (s == 'L' && numSurroundingsOccupied == 0) {
             return '#';
-        } else if (s == '#' && numAdjacentOccupied >= 4) {
+        } else if (s == '#' && numSurroundingsOccupied >= 5) {
             return 'L';
         }
 
