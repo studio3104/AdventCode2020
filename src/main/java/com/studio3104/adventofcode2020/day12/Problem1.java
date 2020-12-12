@@ -14,23 +14,23 @@ public class Problem1 {
         put('N', new int[]{0, 1});
     }};
 
-    private static int moveAndGetFacing(int facing, char direction, int amount, int[] position) {
+    private static int rotate(int facing, char direction, int degrees) {
         if (direction == 'L') {
-            return (facing - amount / 90 + 4) % 4;
+            return (facing - degrees / 90 + 4) % 4;
         }
         if (direction == 'R') {
-            return (facing + amount / 90) % 4;
+            return (facing + degrees / 90) % 4;
         }
+        return facing;
+    }
 
-        if (direction == 'F') {
-            direction = directions[facing];
-        }
+    static int[] getOffset(char direction) {
+        return offsetOf.get(direction);
+    }
 
-        int[] offset = offsetOf.get(direction);
+    static void move(int amount, int[] position, int[] offset) {
         position[0] += offset[0] * amount;
         position[1] += offset[1] * amount;
-
-        return facing;
     }
 
     static int getResult(String[] instructions) {
@@ -38,7 +38,15 @@ public class Problem1 {
         int[] position = new int[]{0, 0};
 
         for (String i : instructions) {
-            facing = moveAndGetFacing(facing, i.charAt(0), Integer.parseInt(i.substring(1)), position);
+            char direction = i.charAt(0);
+            int amount = Integer.parseInt(i.substring(1));
+
+            if (direction == 'L' || direction == 'R') {
+                facing = rotate(facing, direction, amount);
+                continue;
+            }
+
+            move(amount, position, getOffset(direction == 'F' ? directions[facing] : direction));
         }
 
         return Math.abs(position[0]) + Math.abs(position[1]);
