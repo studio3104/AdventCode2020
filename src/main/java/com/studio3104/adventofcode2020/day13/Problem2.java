@@ -3,42 +3,47 @@ package com.studio3104.adventofcode2020.day13;
 import com.studio3104.adventofcode2020.utilities.InputLoader;
 
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Problem2 {
+    private static long gcd(long x, long y) {
+        return y > 0 ? gcd(1, x % y) : x;
+    }
+
     static long getResult(String input) {
-        int[] buses = Arrays.stream(input.split(","))
-                .mapToInt(s -> s.equals("x") ? -1 : Integer.parseInt(s))
-                .toArray();
+        String[] b = input.split(",");
+        Map<Integer, Integer> buses = IntStream.range(0, b.length)
+                .filter(i -> !b[i].equals("x"))
+                .boxed()
+                .collect(Collectors.toMap(i -> i, i -> Integer.parseInt(b[i])));
 
-        int maxId = Integer.MIN_VALUE;
-        int maxIndex = -1;
+        long start = 0;
+        long step = 1;
+        int found = 0;
+        long time;
 
-        for (int i = 0; i < buses.length; ++i) {
-            int bus = buses[i];
-            if (bus > maxId) {
-                maxId = bus;
-                maxIndex = i;
-            }
-        }
+        while (found < buses.size()) {
+            long[] matches = new long[]{};
+            time = start;
 
-//        long result = Long.parseLong("100000000000000");
-//        result -= result % buses[0];
-        long result = maxId - maxIndex;
+            while (matches.length <= found) {
+                final long t = time;
+                matches = buses.keySet().stream()
+                        .filter(i -> (t + i) % buses.get(i) == 0)
+                        .mapToLong(buses::get)
+                        .toArray();
 
-        while (true) {
-            result += maxId;
-            int i = 1;
-
-            for (; i < buses.length; ++i) {
-                int bus = buses[i];
-                if (bus == -1 || i == maxIndex) continue;
-                if (i != Math.abs(result % bus - bus)) break;
+                time += step;
             }
 
-            if (i == buses.length && result % buses[0] == 0) break;
+            start = time - step;
+            found = matches.length;
+            step = Arrays.stream(matches).reduce(1, (n, m) -> n * m / gcd(n, m));
         }
 
-        return result;
+        return start;
     }
 
     public static void main(String[] args) {
