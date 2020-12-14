@@ -1,0 +1,1 @@
+# AdventOfCode2020 [![unit testing](https://github.com/studio3104/AdventOfCode2020/workflows/unit%20testing/badge.svg)](https://github.com/studio3104/AdventOfCode2020/actions?query=workflow%3A%22unit+testing%22)
