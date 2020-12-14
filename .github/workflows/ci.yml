@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  Build:
+  UnitTesting:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,5 +21,4 @@ jobs:
           architecture: x64
 
       - name: Unit Test
-        if: github.event_name == 'pull_request'
         run: gradle test
