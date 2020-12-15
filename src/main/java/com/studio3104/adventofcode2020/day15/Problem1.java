@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Problem1 {
-    static int getResult(int[] nums) {
+    static int getResult(int[] nums, int end) {
         Map<Integer, int[]> log = new HashMap<>();
         int turn = 1;
         int last = 0;
@@ -15,7 +15,7 @@ public class Problem1 {
             log.put(n, new int[]{0, turn});
         }
 
-        for (; turn <= 2020; ++turn) {
+        for (; turn <= end; ++turn) {
             int[] t = log.get(last);
             last = t[0] == 0 ? 0 : t[1] - t[0];
 
@@ -29,6 +29,6 @@ public class Problem1 {
     }
 
     public static void main(String[] args) {
-        System.out.println(getResult(new int[]{2, 0, 1, 9, 5, 19}));
+        System.out.println(getResult(new int[]{2, 0, 1, 9, 5, 19}, 2020));
     }
 }
