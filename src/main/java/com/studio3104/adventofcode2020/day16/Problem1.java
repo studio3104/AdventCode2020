@@ -9,7 +9,7 @@ public class Problem1 {
     private static void validateTickets(Ticket ticket, List<Integer> invalids) {
         for (int[] t : ticket.getNearby()) {
             for (int n : t) {
-                if (!ticket.isWithinAnyRange(n)) {
+                if (ticket.isWithinAnyRange(n)) {
                     invalids.add(n);
                 }
             }

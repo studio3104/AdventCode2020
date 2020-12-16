@@ -2,7 +2,6 @@ package com.studio3104.adventofcode2020.day16;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ public class Ticket {
     private final int[][] mergedPatterns;
     private final int[] yours;
     private final int[][] nearby;
+    private final int[][] validNearby;
 
     public Ticket(String[] stringInput) {
         patterns = new HashMap<>();
@@ -22,15 +22,34 @@ public class Ticket {
 
         yours = parseTicket(line + 1, stringInput);
         nearby = parseNearbyTickets(line + 4, stringInput);
+        validNearby = Arrays.stream(nearby).filter(this::isValidTicket).toArray(int[][]::new);
     }
 
-    public boolean isWithinAnyRange(int n) {
-        for (int[] p : mergedPatterns) {
+    private boolean isValidTicket(int[] ticket) {
+        for (int n : ticket) {
+            if (isWithinAnyRange(n)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isWithinRangeOf(String fieldName, int n) {
+        for (int[] p : patterns.get(fieldName)) {
             if (p[0] <= n && n <= p[1]) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isWithinAnyRange(int n) {
+        for (int[] p : mergedPatterns) {
+            if (p[0] <= n && n <= p[1]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void addPattern(String pattern) {
@@ -73,22 +92,6 @@ public class Ticket {
         for (int[][] pattern : patterns.values()) {
             ranges.addAll(Arrays.asList(pattern));
         }
-        ranges.sort(Comparator.comparingInt(o -> o[0]));
-
-        List<int[]> merged = new ArrayList<>();
-        merged.add(ranges.get(0));
-
-        for (int i = 1; i < ranges.size(); ++i) {
-            int[] currentRange = ranges.get(i);
-            int[] lastRange = merged.get(merged.size() - 1);
-
-            if (lastRange[1] >= currentRange[0]) {
-                lastRange[1] = Math.max(lastRange[1], currentRange[1]);
-                continue;
-            }
-            merged.add(currentRange);
-        }
-
-        return merged.toArray(new int[merged.size()][]);
+        return ranges.toArray(new int[ranges.size()][]);
     }
 }
