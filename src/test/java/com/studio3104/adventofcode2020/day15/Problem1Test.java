@@ -23,7 +23,7 @@ class Problem1Test {
     @ParameterizedTest
     @MethodSource("argumentsProvider")
     void getResult(int[] nums, int expected) {
-        int actual = Problem1.getResult(nums, 2020);
+        int actual = Problem1.getResult(nums);
         Assertions.assertEquals(expected, actual);
     }
 }

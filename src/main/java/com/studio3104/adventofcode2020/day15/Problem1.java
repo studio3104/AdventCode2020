@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Problem1 {
-    static int getResult(int[] nums, int end) {
+    static int playGame(int[] nums, int end) {
         Map<Integer, int[]> log = new HashMap<>();
         int turn = 1;
         int last = 0;
@@ -28,7 +28,11 @@ public class Problem1 {
         return last;
     }
 
+    static int getResult(int[] nums) {
+        return playGame(nums, 2020);
+    }
+
     public static void main(String[] args) {
-        System.out.println(getResult(new int[]{2, 0, 1, 9, 5, 19}, 2020));
+        System.out.println(getResult(new int[]{2, 0, 1, 9, 5, 19}));
     }
 }
