@@ -25,13 +25,17 @@ public class Energy {
 
     public int countActives() {
         int count = 0;
+
         for (boolean[][] grid : cubes.values()) {
             for (boolean[] dimension : grid) {
                 for (boolean cube : dimension) {
-                    if (cube) ++count;
+                    if (cube) {
+                        ++count;
+                    }
                 }
             }
         }
+
         return count;
     }
 
@@ -42,6 +46,7 @@ public class Energy {
             nextCubes.put(z, simulate(z));
         }
 
+        // Extend `z` by one in both negative and positive directions.
         int next = cubes.size() / 2 + 1;
         nextCubes.put(next, simulate(next));
         nextCubes.put(next * -1, simulate(next * -1));
@@ -50,23 +55,18 @@ public class Energy {
     }
 
     private boolean[][] simulate(int z) {
+        // Expand next grid by two in both width and height.
         int yi = cubes.get(0).length + 2;
         int xi = cubes.get(0)[0].length + 2;
         boolean[][] grid = new boolean[yi][xi];
 
         for (int y = yi - 1; y >= 0; --y) {
             for (int x = xi - 1; x >= 0; --x) {
-                boolean current = false;
-                if (cubes.containsKey(z)) {
-                    boolean[][] g = cubes.get(z);
-                    if (y - 1 >= 0 && y - 1 < g.length && x - 1 >= 0 && x - 1 < g[0].length) {
-                        current = g[y - 1][x - 1];
-                    }
-                }
-
+                boolean current = getActiveness(z, y - 1, x - 1);
                 int n = countNeighborActives(x, y, z);
-                if (current && (n == 2 || n == 3)) grid[y][x] = true;
-                if (!current && n == 3) grid[y][x] = true;
+                if ((current && (n == 2 || n == 3)) || (!current && n == 3)) {
+                    grid[y][x] = true;
+                }
             }
         }
 
@@ -77,12 +77,19 @@ public class Energy {
         int count = 0;
 
         for (int z = zi - 1; z <= zi + 1; ++z) {
-            if (!cubes.containsKey(z)) continue;
+            if (!cubes.containsKey(z)) {
+                continue;
+            }
 
             for (int y = yi - 1; y <= yi + 1; ++y) {
                 for (int x = xi - 1; x <= xi + 1; ++x) {
-                    if (z == zi && y == yi && x == xi) continue;
-                    if (isActive(z, y - 1, x -1)) ++count;
+                    if (z == zi && y == yi && x == xi) {
+                        continue;
+                    }
+
+                    if (getActiveness(z, y - 1, x -1)) {
+                        ++count;
+                    }
                 }
             }
         }
@@ -90,11 +97,16 @@ public class Energy {
         return count;
     }
 
-    private boolean isActive(int z, int y, int x) {
+    private boolean getActiveness(int z, int y, int x) {
+        if (!cubes.containsKey(z)) {
+            return false;
+        }
         boolean[][] g = cubes.get(z);
+
         if (y >= 0 && y < g.length && x >= 0 && x < g[0].length) {
             return g[y][x];
         }
+
         return false;
     }
 }
