@@ -71,6 +71,21 @@ public class Problem1 {
             count += countIngredientsOf.get(ingredient);
         }
 
+        // for Part 2
+        Map<String, String> reversedIdentified = new HashMap<>();
+        for (String ingredient : identified.keySet()) {
+            String allergen = identified.get(ingredient);
+            reversedIdentified.put(allergen, ingredient);
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String allergen : reversedIdentified.keySet().stream().sorted().toArray(String[]::new)) {
+            sb.append(reversedIdentified.get(allergen));
+            sb.append(",");
+        }
+        System.out.println(sb.toString());
+
+
+        // Part 1 result
         return count;
     }
 
