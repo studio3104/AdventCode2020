@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Problem1 {
-    private static Map<String, Set<String>> parseInt(String[] input, Map<String, Set<String>> candidatesOf, Map<String, Integer> countIngredientsOf) {
+    private static void parseInt(String[] input, Map<String, Set<String>> candidatesOf, Map<String, Integer> countIngredientsOf) {
         Map<String, Map<String, Integer>> countIngredientsPerAllergenOf = new HashMap<>();
         Map<String, Integer> countAllergensOf = new HashMap<>();
 
@@ -43,8 +43,6 @@ public class Problem1 {
                 candidatesOf.get(allergen).add(ingredient);
             }
         }
-
-        return candidatesOf;
     }
 
     static int getResult(String[] input) {
