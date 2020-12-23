@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 class Problem1 {
-    static int getResult(int[] input) {
+    static ListNode playGame(int[] input, int times) {
         ListNode head = ListNode.fromArray(input);
         ListNode current = head;
 
@@ -14,13 +14,13 @@ class Problem1 {
             current = current.next;
         } while (head != current);
 
-        for (int i = 1; i <= 100; ++i) {
+        for (int i = 1; i <= times; ++i) {
             ListNode picked = current.next;
             current.next = picked.next.next.next;
 
-            int dest = current.val == 1 ? 9 : current.val - 1;
+            int dest = current.val == 1 ? input.length : current.val - 1;
             while (picked.val == dest || picked.next.val == dest || picked.next.next.val == dest) {
-                dest = dest == 1 ? 9 : dest - 1;
+                dest = dest == 1 ? input.length : dest - 1;
             }
 
             ListNode target = listNodeOf.get(dest);
@@ -29,9 +29,14 @@ class Problem1 {
             current = current.next;
         }
 
+        return listNodeOf.get(1).next;
+    }
+
+    static int getResult(int[] input) {
+        ListNode current = playGame(input, 100);
+
         int result = 0;
 
-        current = listNodeOf.get(1).next;
         while (current.val != 1) {
             result = result * 10 + current.val;
             current = current.next;
