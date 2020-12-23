@@ -22,6 +22,6 @@ public class Problem2 {
     }
 
     public static void main(String[] args) {
-        System.out.println(getResult(InputLoader.loadStringInput(99)));
+        System.out.println(getResult(InputLoader.loadStringInput(22)));
     }
 }
