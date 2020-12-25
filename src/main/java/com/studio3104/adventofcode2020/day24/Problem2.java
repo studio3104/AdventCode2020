@@ -18,11 +18,7 @@ public class Problem2 {
         }
     }
 
-    private static int countBlackAdjacentAround(List<Integer> tile, Set<List<Integer>> blackTiles, Map<List<Integer>, Integer> memo) {
-        if (memo.containsKey(tile)) {
-            return memo.get(tile);
-        }
-
+    private static int countBlackAdjacentAround(List<Integer> tile, Set<List<Integer>> blackTiles) {
         int count = 0;
 
         int north = tile.get(0);
@@ -35,19 +31,17 @@ public class Problem2 {
         if (blackTiles.contains(List.of(north - 1, east + 1))) ++count;
         if (blackTiles.contains(List.of(north - 1, east - 1))) ++count;
 
-        memo.put(tile, count);
         return count;
     }
 
     private static void flipTiles(Set<List<Integer>> blackTiles, Map<String, Integer> range) {
-        Map<List<Integer>, Integer> memo = new HashMap<>();
         Set<List<Integer>> toWhite = new HashSet<>();
         Set<List<Integer>> toBlack = new HashSet<>();
 
         for (int north = range.get("southernmost"); north <= range.get("northernmost"); ++north) {
             for (int east = range.get("westernmost"); east <= range.get("easternmost"); ++east) {
                 List<Integer> tile = List.of(north, east);
-                int numBlack = countBlackAdjacentAround(tile, blackTiles, memo);
+                int numBlack = countBlackAdjacentAround(tile, blackTiles);
 
                 if (blackTiles.contains(tile)) {
                     if (numBlack == 0 || numBlack > 2) {
